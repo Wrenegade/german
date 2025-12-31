@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  german-flashcards:
+    build: .
+    container_name: german-flashcards
+    ports:
+      - "82:80"
+    restart: unless-stopped

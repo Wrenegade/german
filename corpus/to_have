@@ -1,0 +1,545 @@
+{
+  "verb": "haben",
+  "description": "To have - bike touring scenarios for May 2025 Germany trip",
+  "scenarios": [
+    {
+      "id": 1,
+      "name": "Plans",
+      "cards": [
+        {
+          "english": "I have a plan for today.",
+          "german": "Ich habe einen Plan für heute.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a plan for today?",
+          "german": "Hast du einen Plan für heute?",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a plan.",
+          "german": "Ich hatte einen Plan.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have a plan.",
+          "german": "Wir haben einen Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had a good plan.",
+          "german": "Wir hatten einen guten Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have a plan.",
+          "german": "Sie haben einen Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have a plan.",
+          "german": "Sie haben keinen Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have a plan?",
+          "german": "Haben sie einen Plan?",
+          "category": "We/They"
+        },
+        {
+          "english": "Who has the plan for today?",
+          "german": "Wer hat den Plan für heute?",
+          "category": "We/They"
+        },
+        {
+          "english": "Who had the plan for today?",
+          "german": "Wer hatte den Plan für heute?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Headache",
+      "cards": [
+        {
+          "english": "I have a headache.",
+          "german": "Ich habe Kopfschmerzen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I going to have a headache.",
+          "german": "Ich werde Kopfschmerzen haben.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a bad headache.",
+          "german": "Ich hatte starke Kopfschmerzen.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have headaches.",
+          "german": "Wir haben Kopfschmerzen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have headaches.",
+          "german": "Sie haben Kopfschmerzen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They had headaches yesterday.",
+          "german": "Sie hatten gestern Kopfschmerzen.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Money",
+      "cards": [
+        {
+          "english": "I don't have any money.",
+          "german": "Ich habe kein Geld.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have enough money.",
+          "german": "Ich habe nicht genug Geld.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have enough money.",
+          "german": "Ich habe genug Geld.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have money?",
+          "german": "Hast du Geld?",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have enough money?",
+          "german": "Hast du genug Geld?",
+          "category": "I/You"
+        },
+        {
+          "english": "We don't have enough money.",
+          "german": "Wir haben nicht genug Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have money.",
+          "german": "Wir haben Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have money.",
+          "german": "Sie haben Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have any money.",
+          "german": "Sie haben kein Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have enough money?",
+          "german": "Haben sie genug Geld?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Time",
+      "cards": [
+        {
+          "english": "I have time.",
+          "german": "Ich habe Zeit.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have time.",
+          "german": "Ich habe keine Zeit.",
+          "category": "I/You"
+        },
+        {
+          "english": "I will have time.",
+          "german": "Ich werde Zeit haben.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have to make time.",
+          "german": "Ich muss Zeit finden.",
+          "category": "I/You"
+        },
+        {
+          "english": "Will you have time?",
+          "german": "Wirst du Zeit haben?",
+          "category": "I/You"
+        },
+        {
+          "english": "We have time.",
+          "german": "Wir haben Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "We don't have time.",
+          "german": "Wir haben keine Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have no time.",
+          "german": "Wir haben keine Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "We will have time later.",
+          "german": "Wir werden später Zeit haben.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have time.",
+          "german": "Sie haben Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have time.",
+          "german": "Sie haben keine Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have time?",
+          "german": "Haben sie Zeit?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Reservation",
+      "cards": [
+        {
+          "english": "I have a reservation.",
+          "german": "Ich habe eine Reservierung.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a reservation.",
+          "german": "Ich hatte eine Reservierung.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a reservation?",
+          "german": "Haben Sie eine Reservierung?",
+          "category": "I/You"
+        },
+        {
+          "english": "You don't have a reservation.",
+          "german": "Sie haben keine Reservierung.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have a reservation.",
+          "german": "Wir haben eine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had a reservation.",
+          "german": "Wir hatten eine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have a reservation.",
+          "german": "Sie haben eine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have a reservation.",
+          "german": "Sie haben keine Reservierung.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Bike/Equipment Issues",
+      "cards": [
+        {
+          "english": "I have a flat tire.",
+          "german": "Ich habe einen platten Reifen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a flat tire yesterday.",
+          "german": "Ich hatte gestern einen platten Reifen.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a pump?",
+          "german": "Hast du eine Pumpe?",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have tools?",
+          "german": "Hast du Werkzeug?",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have a spare tube.",
+          "german": "Ich habe keinen Ersatzschlauch.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have everything we need.",
+          "german": "Wir haben alles, was wir brauchen.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have a problem.",
+          "german": "Wir haben ein Problem.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had a flat tire.",
+          "german": "Wir hatten einen platten Reifen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have tools.",
+          "german": "Sie haben Werkzeug.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have a pump.",
+          "german": "Sie haben keine Pumpe.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have everything?",
+          "german": "Haben sie alles?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Food/Hunger",
+      "cards": [
+        {
+          "english": "I have hunger.",
+          "german": "Ich habe Hunger.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have hunger yet.",
+          "german": "Ich habe noch keinen Hunger.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have hunger?",
+          "german": "Hast du Hunger?",
+          "category": "I/You"
+        },
+        {
+          "english": "We have to eat something.",
+          "german": "Wir müssen etwas essen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had breakfast already.",
+          "german": "Ich hatte schon Frühstück.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have hunger.",
+          "german": "Wir haben Hunger.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had lunch already.",
+          "german": "Wir hatten schon Mittagessen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have hunger.",
+          "german": "Sie haben Hunger.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have food.",
+          "german": "Sie haben kein Essen.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Directions/Maps",
+      "cards": [
+        {
+          "english": "I have a map.",
+          "german": "Ich habe eine Karte.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a map?",
+          "german": "Hast du eine Karte?",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have the address.",
+          "german": "Ich habe die Adresse nicht.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have GPS.",
+          "german": "Ich habe GPS.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had the wrong address.",
+          "german": "Ich hatte die falsche Adresse.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have to find the street.",
+          "german": "Wir müssen die Straße finden.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have a map.",
+          "german": "Wir haben eine Karte.",
+          "category": "We/They"
+        },
+        {
+          "english": "We don't have GPS.",
+          "german": "Wir haben kein GPS.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have the address.",
+          "german": "Sie haben die Adresse.",
+          "category": "We/They"
+        },
+        {
+          "english": "They had the wrong directions.",
+          "german": "Sie hatten die falsche Richtung.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Lodging/Accommodation",
+      "cards": [
+        {
+          "english": "I have a room.",
+          "german": "Ich habe ein Zimmer.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have a room yet.",
+          "german": "Ich habe noch kein Zimmer.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have rooms available?",
+          "german": "Haben Sie Zimmer frei?",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a reservation for tonight.",
+          "german": "Ich hatte eine Reservierung für heute Abend.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have a problem with the booking.",
+          "german": "Wir haben ein Problem mit der Buchung.",
+          "category": "We/They"
+        },
+        {
+          "english": "I have to find a hotel.",
+          "german": "Ich muss ein Hotel finden.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have rooms.",
+          "german": "Wir haben Zimmer.",
+          "category": "We/They"
+        },
+        {
+          "english": "We don't have a reservation.",
+          "german": "Wir haben keine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have a hotel.",
+          "german": "Sie haben ein Hotel.",
+          "category": "We/They"
+        },
+        {
+          "english": "They had problems with the booking.",
+          "german": "Sie hatten Probleme mit der Buchung.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Pain/Discomfort",
+      "cards": [
+        {
+          "english": "I have back pain.",
+          "german": "Ich habe Rückenschmerzen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have sore legs.",
+          "german": "Ich habe Muskelkater in den Beinen.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have pain?",
+          "german": "Hast du Schmerzen?",
+          "category": "I/You"
+        },
+        {
+          "english": "I had no problems yesterday.",
+          "german": "Ich hatte gestern keine Probleme.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have any injuries.",
+          "german": "Ich habe keine Verletzungen.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have problems.",
+          "german": "Wir haben Probleme.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had no pain yesterday.",
+          "german": "Wir hatten gestern keine Schmerzen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have injuries.",
+          "german": "Sie haben Verletzungen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have any problems.",
+          "german": "Sie haben keine Probleme.",
+          "category": "We/They"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "total_cards": 99,
+    "scenarios": 10
+  }
+}

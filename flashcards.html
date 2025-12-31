@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Flashcards - Haben</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .scenario-info {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .scenario-info h2 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .scenario-info p {
+            opacity: 0.9;
+        }
+
+        .card-container {
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-front {
+            background: white;
+        }
+
+        .card-back {
+            background: #f8f9fa;
+            transform: rotateY(180deg);
+        }
+
+        .card-label {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .card-back .card-label {
+            color: #764ba2;
+        }
+
+        .card-text {
+            font-size: 2em;
+            text-align: center;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .card-hint {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #999;
+            text-align: center;
+        }
+
+        .speaker-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .speaker-btn:hover {
+            background: #5568d3;
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+
+        .speaker-btn:active {
+            transform: scale(0.95);
+        }
+
+        .speaker-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            color: #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .scenario-nav {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .scenario-btn {
+            padding: 8px 16px;
+            border: 2px solid white;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .scenario-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .scenario-btn.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .progress {
+            text-align: center;
+            color: white;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .keyboard-hint {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        .verb-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .verb-tab {
+            padding: 15px 40px;
+            border: 2px solid white;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .verb-tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .verb-tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .card {
+                height: 350px;
+            }
+
+            .card-text {
+                font-size: 1.5em;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>German Flashcards</h1>
+            <p>Master essential verbs for your May bike tour!</p>
+        </div>
+
+        <div class="verb-tabs">
+            <button class="verb-tab active" data-verb="haben">Have</button>
+            <button class="verb-tab" data-verb="wollen">Want</button>
+        </div>
+
+        <div class="scenario-info">
+            <h2 id="scenario-name">Loading...</h2>
+            <p id="scenario-description"></p>
+        </div>
+
+        <div class="progress">
+            Card <span id="current-card">1</span> of <span id="total-cards">0</span>
+        </div>
+
+        <div class="card-container">
+            <div class="card" id="flashcard">
+                <div class="card-face card-front">
+                    <div class="card-label">Deutsch</div>
+                    <div class="card-text" id="german-text">Loading...</div>
+                    <button class="speaker-btn" id="speaker-btn" title="Listen to pronunciation">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                    </button>
+                    <div class="card-hint">Click to reveal English</div>
+                </div>
+                <div class="card-face card-back">
+                    <div class="card-label">English</div>
+                    <div class="card-text" id="english-text">Loading...</div>
+                    <div class="card-hint">Click to flip back</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="prev-btn">← Previous</button>
+            <button class="btn btn-primary" id="flip-btn">Flip Card</button>
+            <button class="btn" id="next-btn">Next →</button>
+        </div>
+
+        <div class="scenario-nav" id="scenario-nav"></div>
+
+        <div class="keyboard-hint">
+            💡 Keyboard shortcuts: Space/Click to flip | ← → to navigate cards | 🔊 Auto-plays on each card
+        </div>
+    </div>
+
+    <script>
+        // Embedded corpus data for multiple verbs
+        const corpuses = {
+            haben: {
+  "verb": "haben",
+  "description": "To have - bike touring scenarios for May 2025 Germany trip",
+  "scenarios": [
+    {
+      "id": 1,
+      "name": "Plans",
+      "cards": [
+        {
+          "english": "I have a plan for today.",
+          "german": "Ich habe einen Plan für heute.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a plan for today?",
+          "german": "Hast du einen Plan für heute?",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a plan.",
+          "german": "Ich hatte einen Plan.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have a plan.",
+          "german": "Wir haben einen Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had a good plan.",
+          "german": "Wir hatten einen guten Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have a plan.",
+          "german": "Sie haben einen Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have a plan.",
+          "german": "Sie haben keinen Plan.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have a plan?",
+          "german": "Haben sie einen Plan?",
+          "category": "We/They"
+        },
+        {
+          "english": "Who has the plan for today?",
+          "german": "Wer hat den Plan für heute?",
+          "category": "We/They"
+        },
+        {
+          "english": "Who had the plan for today?",
+          "german": "Wer hatte den Plan für heute?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Headache",
+      "cards": [
+        {
+          "english": "I have a headache.",
+          "german": "Ich habe Kopfschmerzen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I going to have a headache.",
+          "german": "Ich werde Kopfschmerzen haben.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a bad headache.",
+          "german": "Ich hatte starke Kopfschmerzen.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have headaches.",
+          "german": "Wir haben Kopfschmerzen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have headaches.",
+          "german": "Sie haben Kopfschmerzen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They had headaches yesterday.",
+          "german": "Sie hatten gestern Kopfschmerzen.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Money",
+      "cards": [
+        {
+          "english": "I don't have any money.",
+          "german": "Ich habe kein Geld.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have enough money.",
+          "german": "Ich habe nicht genug Geld.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have enough money.",
+          "german": "Ich habe genug Geld.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have money?",
+          "german": "Hast du Geld?",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have enough money?",
+          "german": "Hast du genug Geld?",
+          "category": "I/You"
+        },
+        {
+          "english": "We don't have enough money.",
+          "german": "Wir haben nicht genug Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have money.",
+          "german": "Wir haben Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have money.",
+          "german": "Sie haben Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have any money.",
+          "german": "Sie haben kein Geld.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have enough money?",
+          "german": "Haben sie genug Geld?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Time",
+      "cards": [
+        {
+          "english": "I have time.",
+          "german": "Ich habe Zeit.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have time.",
+          "german": "Ich habe keine Zeit.",
+          "category": "I/You"
+        },
+        {
+          "english": "I will have time.",
+          "german": "Ich werde Zeit haben.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have to make time.",
+          "german": "Ich muss Zeit finden.",
+          "category": "I/You"
+        },
+        {
+          "english": "Will you have time?",
+          "german": "Wirst du Zeit haben?",
+          "category": "I/You"
+        },
+        {
+          "english": "We have time.",
+          "german": "Wir haben Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "We don't have time.",
+          "german": "Wir haben keine Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have no time.",
+          "german": "Wir haben keine Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "We will have time later.",
+          "german": "Wir werden später Zeit haben.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have time.",
+          "german": "Sie haben Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have time.",
+          "german": "Sie haben keine Zeit.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have time?",
+          "german": "Haben sie Zeit?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Reservation",
+      "cards": [
+        {
+          "english": "I have a reservation.",
+          "german": "Ich habe eine Reservierung.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a reservation.",
+          "german": "Ich hatte eine Reservierung.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a reservation?",
+          "german": "Haben Sie eine Reservierung?",
+          "category": "I/You"
+        },
+        {
+          "english": "You don't have a reservation.",
+          "german": "Sie haben keine Reservierung.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have a reservation.",
+          "german": "Wir haben eine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had a reservation.",
+          "german": "Wir hatten eine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have a reservation.",
+          "german": "Sie haben eine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have a reservation.",
+          "german": "Sie haben keine Reservierung.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Bike/Equipment Issues",
+      "cards": [
+        {
+          "english": "I have a flat tire.",
+          "german": "Ich habe einen platten Reifen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a flat tire yesterday.",
+          "german": "Ich hatte gestern einen platten Reifen.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a pump?",
+          "german": "Hast du eine Pumpe?",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have tools?",
+          "german": "Hast du Werkzeug?",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have a spare tube.",
+          "german": "Ich habe keinen Ersatzschlauch.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have everything we need.",
+          "german": "Wir haben alles, was wir brauchen.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have a problem.",
+          "german": "Wir haben ein Problem.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had a flat tire.",
+          "german": "Wir hatten einen platten Reifen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have tools.",
+          "german": "Sie haben Werkzeug.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have a pump.",
+          "german": "Sie haben keine Pumpe.",
+          "category": "We/They"
+        },
+        {
+          "english": "Do they have everything?",
+          "german": "Haben sie alles?",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Food/Hunger",
+      "cards": [
+        {
+          "english": "I have hunger.",
+          "german": "Ich habe Hunger.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have hunger yet.",
+          "german": "Ich habe noch keinen Hunger.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have hunger?",
+          "german": "Hast du Hunger?",
+          "category": "I/You"
+        },
+        {
+          "english": "We have to eat something.",
+          "german": "Wir müssen etwas essen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had breakfast already.",
+          "german": "Ich hatte schon Frühstück.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have hunger.",
+          "german": "Wir haben Hunger.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had lunch already.",
+          "german": "Wir hatten schon Mittagessen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have hunger.",
+          "german": "Sie haben Hunger.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have food.",
+          "german": "Sie haben kein Essen.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Directions/Maps",
+      "cards": [
+        {
+          "english": "I have a map.",
+          "german": "Ich habe eine Karte.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have a map?",
+          "german": "Hast du eine Karte?",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have the address.",
+          "german": "Ich habe die Adresse nicht.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have GPS.",
+          "german": "Ich habe GPS.",
+          "category": "I/You"
+        },
+        {
+          "english": "I had the wrong address.",
+          "german": "Ich hatte die falsche Adresse.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have to find the street.",
+          "german": "Wir müssen die Straße finden.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have a map.",
+          "german": "Wir haben eine Karte.",
+          "category": "We/They"
+        },
+        {
+          "english": "We don't have GPS.",
+          "german": "Wir haben kein GPS.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have the address.",
+          "german": "Sie haben die Adresse.",
+          "category": "We/They"
+        },
+        {
+          "english": "They had the wrong directions.",
+          "german": "Sie hatten die falsche Richtung.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Lodging/Accommodation",
+      "cards": [
+        {
+          "english": "I have a room.",
+          "german": "Ich habe ein Zimmer.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have a room yet.",
+          "german": "Ich habe noch kein Zimmer.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have rooms available?",
+          "german": "Haben Sie Zimmer frei?",
+          "category": "I/You"
+        },
+        {
+          "english": "I had a reservation for tonight.",
+          "german": "Ich hatte eine Reservierung für heute Abend.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have a problem with the booking.",
+          "german": "Wir haben ein Problem mit der Buchung.",
+          "category": "We/They"
+        },
+        {
+          "english": "I have to find a hotel.",
+          "german": "Ich muss ein Hotel finden.",
+          "category": "We/They"
+        },
+        {
+          "english": "We have rooms.",
+          "german": "Wir haben Zimmer.",
+          "category": "We/They"
+        },
+        {
+          "english": "We don't have a reservation.",
+          "german": "Wir haben keine Reservierung.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have a hotel.",
+          "german": "Sie haben ein Hotel.",
+          "category": "We/They"
+        },
+        {
+          "english": "They had problems with the booking.",
+          "german": "Sie hatten Probleme mit der Buchung.",
+          "category": "We/They"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Pain/Discomfort",
+      "cards": [
+        {
+          "english": "I have back pain.",
+          "german": "Ich habe Rückenschmerzen.",
+          "category": "I/You"
+        },
+        {
+          "english": "I have sore legs.",
+          "german": "Ich habe Muskelkater in den Beinen.",
+          "category": "I/You"
+        },
+        {
+          "english": "Do you have pain?",
+          "german": "Hast du Schmerzen?",
+          "category": "I/You"
+        },
+        {
+          "english": "I had no problems yesterday.",
+          "german": "Ich hatte gestern keine Probleme.",
+          "category": "I/You"
+        },
+        {
+          "english": "I don't have any injuries.",
+          "german": "Ich habe keine Verletzungen.",
+          "category": "I/You"
+        },
+        {
+          "english": "We have problems.",
+          "german": "Wir haben Probleme.",
+          "category": "We/They"
+        },
+        {
+          "english": "We had no pain yesterday.",
+          "german": "Wir hatten gestern keine Schmerzen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They have injuries.",
+          "german": "Sie haben Verletzungen.",
+          "category": "We/They"
+        },
+        {
+          "english": "They don't have any problems.",
+          "german": "Sie haben keine Probleme.",
+          "category": "We/They"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "total_cards": 99,
+    "scenarios": 10
+  }
+},
+            wollen: {
+  "verb": "wollen",
+  "description": "To want - bike touring scenarios for May 2025 Germany trip",
+  "scenarios": [
+    {
+      "id": 1,
+      "name": "Destinations",
+      "cards": [
+        {"english": "I want to go to Munich.", "german": "Ich will nach München fahren.", "category": "I/You"},
+        {"english": "Do you want to go to Berlin?", "german": "Willst du nach Berlin fahren?", "category": "I/You"},
+        {"english": "I wanted to visit the castle.", "german": "Ich wollte das Schloss besuchen.", "category": "I/You"},
+        {"english": "We want to ride along the river.", "german": "Wir wollen am Fluss entlang fahren.", "category": "We/They"},
+        {"english": "We wanted to see the mountains.", "german": "Wir wollten die Berge sehen.", "category": "We/They"},
+        {"english": "They want to go to the city center.", "german": "Sie wollen ins Stadtzentrum fahren.", "category": "We/They"},
+        {"english": "They don't want to take the highway.", "german": "Sie wollen nicht die Autobahn nehmen.", "category": "We/They"},
+        {"english": "Where do you want to go?", "german": "Wo willst du hinfahren?", "category": "I/You"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Food & Drinks",
+      "cards": [
+        {"english": "I want something to eat.", "german": "Ich will etwas zu essen.", "category": "I/You"},
+        {"english": "I want a coffee.", "german": "Ich will einen Kaffee.", "category": "I/You"},
+        {"english": "Do you want water?", "german": "Willst du Wasser?", "category": "I/You"},
+        {"english": "I wanted breakfast.", "german": "Ich wollte frühstücken.", "category": "I/You"},
+        {"english": "We want to eat something local.", "german": "Wir wollen etwas Regionales essen.", "category": "We/They"},
+        {"english": "We don't want fast food.", "german": "Wir wollen kein Fast Food.", "category": "We/They"},
+        {"english": "They want beer.", "german": "Sie wollen Bier.", "category": "We/They"},
+        {"english": "What do you want to drink?", "german": "Was willst du trinken?", "category": "I/You"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Rest & Breaks",
+      "cards": [
+        {"english": "I want to take a break.", "german": "Ich will eine Pause machen.", "category": "I/You"},
+        {"english": "I want to rest.", "german": "Ich will mich ausruhen.", "category": "I/You"},
+        {"english": "Do you want to stop here?", "german": "Willst du hier anhalten?", "category": "I/You"},
+        {"english": "I wanted to sleep longer.", "german": "Ich wollte länger schlafen.", "category": "I/You"},
+        {"english": "We want to rest for an hour.", "german": "Wir wollen eine Stunde rasten.", "category": "We/They"},
+        {"english": "We want to find a bench.", "german": "Wir wollen eine Bank finden.", "category": "We/They"},
+        {"english": "They want to take a longer break.", "german": "Sie wollen eine längere Pause machen.", "category": "We/They"},
+        {"english": "They don't want to continue yet.", "german": "Sie wollen noch nicht weiterfahren.", "category": "We/They"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Route Preferences",
+      "cards": [
+        {"english": "I want to take the scenic route.", "german": "Ich will die schöne Strecke nehmen.", "category": "I/You"},
+        {"english": "I don't want to go uphill.", "german": "Ich will nicht bergauf fahren.", "category": "I/You"},
+        {"english": "Do you want to take the bike path?", "german": "Willst du den Radweg nehmen?", "category": "I/You"},
+        {"english": "I wanted to avoid the main road.", "german": "Ich wollte die Hauptstraße vermeiden.", "category": "I/You"},
+        {"english": "We want to follow the river.", "german": "Wir wollen dem Fluss folgen.", "category": "We/They"},
+        {"english": "We want a flat route.", "german": "Wir wollen eine flache Strecke.", "category": "We/They"},
+        {"english": "They want to go through the forest.", "german": "Sie wollen durch den Wald fahren.", "category": "We/They"},
+        {"english": "They don't want to take shortcuts.", "german": "Sie wollen keine Abkürzungen nehmen.", "category": "We/They"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Activities",
+      "cards": [
+        {"english": "I want to take photos.", "german": "Ich will Fotos machen.", "category": "I/You"},
+        {"english": "I want to see the church.", "german": "Ich will die Kirche sehen.", "category": "I/You"},
+        {"english": "Do you want to swim?", "german": "Willst du schwimmen?", "category": "I/You"},
+        {"english": "I wanted to visit the museum.", "german": "Ich wollte das Museum besuchen.", "category": "I/You"},
+        {"english": "We want to explore the old town.", "german": "Wir wollen die Altstadt erkunden.", "category": "We/They"},
+        {"english": "We want to see the sunset.", "german": "Wir wollen den Sonnenuntergang sehen.", "category": "We/They"},
+        {"english": "They want to go shopping.", "german": "Sie wollen einkaufen gehen.", "category": "We/They"},
+        {"english": "They don't want to hurry.", "german": "Sie wollen sich nicht beeilen.", "category": "We/They"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Shopping & Supplies",
+      "cards": [
+        {"english": "I want to buy a map.", "german": "Ich will eine Karte kaufen.", "category": "I/You"},
+        {"english": "I want to find a bike shop.", "german": "Ich will einen Fahrradladen finden.", "category": "I/You"},
+        {"english": "Do you want to buy snacks?", "german": "Willst du Snacks kaufen?", "category": "I/You"},
+        {"english": "I wanted to get a new tire.", "german": "Ich wollte einen neuen Reifen holen.", "category": "I/You"},
+        {"english": "We want to buy supplies.", "german": "Wir wollen Vorräte kaufen.", "category": "We/They"},
+        {"english": "We want to find a supermarket.", "german": "Wir wollen einen Supermarkt finden.", "category": "We/They"},
+        {"english": "They want to get sunscreen.", "german": "Sie wollen Sonnencreme holen.", "category": "We/They"},
+        {"english": "They don't want to spend too much.", "german": "Sie wollen nicht zu viel ausgeben.", "category": "We/They"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Help & Assistance",
+      "cards": [
+        {"english": "I want help.", "german": "Ich will Hilfe.", "category": "I/You"},
+        {"english": "I want to ask someone.", "german": "Ich will jemanden fragen.", "category": "I/You"},
+        {"english": "Do you want directions?", "german": "Willst du eine Wegbeschreibung?", "category": "I/You"},
+        {"english": "I wanted to call for help.", "german": "Ich wollte um Hilfe rufen.", "category": "I/You"},
+        {"english": "We want to find a mechanic.", "german": "Wir wollen einen Mechaniker finden.", "category": "We/They"},
+        {"english": "We want someone to help us.", "german": "Wir wollen dass uns jemand hilft.", "category": "We/They"},
+        {"english": "They want information.", "german": "Sie wollen Informationen.", "category": "We/They"},
+        {"english": "They don't want to bother anyone.", "german": "Sie wollen niemanden stören.", "category": "We/They"}
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Weather & Conditions",
+      "cards": [
+        {"english": "I want sun.", "german": "Ich will Sonne.", "category": "I/You"},
+        {"english": "I don't want rain.", "german": "Ich will keinen Regen.", "category": "I/You"},
+        {"english": "Do you want to wait for better weather?", "german": "Willst du auf besseres Wetter warten?", "category": "I/You"},
+        {"english": "I wanted to ride in sunshine.", "german": "Ich wollte im Sonnenschein fahren.", "category": "I/You"},
+        {"english": "We want to avoid the storm.", "german": "Wir wollen den Sturm vermeiden.", "category": "We/They"},
+        {"english": "We want dry roads.", "german": "Wir wollen trockene Straßen.", "category": "We/They"},
+        {"english": "They want cooler temperatures.", "german": "Sie wollen kühlere Temperaturen.", "category": "We/They"},
+        {"english": "They don't want to ride in the heat.", "german": "Sie wollen nicht in der Hitze fahren.", "category": "We/They"}
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Accommodation",
+      "cards": [
+        {"english": "I want a room for tonight.", "german": "Ich will ein Zimmer für heute Nacht.", "category": "I/You"},
+        {"english": "I want to stay here.", "german": "Ich will hier bleiben.", "category": "I/You"},
+        {"english": "Do you want to camp?", "german": "Willst du zelten?", "category": "I/You"},
+        {"english": "I wanted to find a hostel.", "german": "Ich wollte eine Jugendherberge finden.", "category": "I/You"},
+        {"english": "We want a quiet place.", "german": "Wir wollen einen ruhigen Ort.", "category": "We/They"},
+        {"english": "We want to book a hotel.", "german": "Wir wollen ein Hotel buchen.", "category": "We/They"},
+        {"english": "They want a place with breakfast.", "german": "Sie wollen einen Ort mit Frühstück.", "category": "We/They"},
+        {"english": "They don't want to spend a lot.", "german": "Sie wollen nicht viel ausgeben.", "category": "We/They"}
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Time & Schedule",
+      "cards": [
+        {"english": "I want to leave early.", "german": "Ich will früh losfahren.", "category": "I/You"},
+        {"english": "I want to arrive before dark.", "german": "Ich will vor der Dunkelheit ankommen.", "category": "I/You"},
+        {"english": "Do you want to start now?", "german": "Willst du jetzt starten?", "category": "I/You"},
+        {"english": "I wanted to leave yesterday.", "german": "Ich wollte gestern losfahren.", "category": "I/You"},
+        {"english": "We want to be there by noon.", "german": "Wir wollen bis Mittag dort sein.", "category": "We/They"},
+        {"english": "We want to take our time.", "german": "Wir wollen uns Zeit lassen.", "category": "We/They"},
+        {"english": "They want to finish early.", "german": "Sie wollen früh fertig sein.", "category": "We/They"},
+        {"english": "They don't want to rush.", "german": "Sie wollen sich nicht hetzen.", "category": "We/They"}
+      ]
+    }
+  ],
+  "stats": {
+    "total_cards": 79,
+    "scenarios": 10
+  }
+}
+        };
+
+        let currentVerb = 'haben';
+        let currentScenarioIndex = 0;
+        let currentCardIndex = 0;
+
+        function getCurrentCorpus() {
+            return corpuses[currentVerb];
+        }
+
+        function initializeApp() {
+            createScenarioNav();
+            displayCard();
+            updateControls();
+        }
+
+        function speakGerman() {
+            const germanText = document.getElementById('german-text').textContent;
+
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+
+            // Create speech utterance
+            const utterance = new SpeechSynthesisUtterance(germanText);
+            utterance.lang = 'de-DE';
+            utterance.rate = 0.85; // Slightly slower for learning
+            utterance.pitch = 1;
+
+            // Speak
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function createScenarioNav() {
+            const nav = document.getElementById('scenario-nav');
+            nav.innerHTML = '';
+
+            getCurrentCorpus().scenarios.forEach((scenario, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'scenario-btn';
+                btn.textContent = scenario.name;
+                if (index === currentScenarioIndex) {
+                    btn.classList.add('active');
+                }
+                btn.addEventListener('click', () => {
+                    currentScenarioIndex = index;
+                    currentCardIndex = 0;
+                    displayCard();
+                    updateControls();
+                    updateScenarioNav();
+                });
+                nav.appendChild(btn);
+            });
+        }
+
+        function updateScenarioNav() {
+            const buttons = document.querySelectorAll('.scenario-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.toggle('active', index === currentScenarioIndex);
+            });
+        }
+
+        function displayCard() {
+            const corpus = getCurrentCorpus();
+            const scenario = corpus.scenarios[currentScenarioIndex];
+            const card = scenario.cards[currentCardIndex];
+
+            // Update scenario info
+            document.getElementById('scenario-name').textContent = scenario.name;
+            document.getElementById('scenario-description').textContent = `Scenario ${scenario.id} of ${corpus.scenarios.length}`;
+
+            // Update card content
+            document.getElementById('german-text').textContent = card.german;
+            document.getElementById('english-text').textContent = card.english;
+
+            // Update progress
+            document.getElementById('current-card').textContent = currentCardIndex + 1;
+            document.getElementById('total-cards').textContent = scenario.cards.length;
+
+            // Reset flip state
+            document.getElementById('flashcard').classList.remove('flipped');
+
+            // Auto-play German pronunciation after a short delay
+            setTimeout(() => {
+                speakGerman();
+            }, 500);
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('flipped');
+        }
+
+        function nextCard() {
+            const scenario = getCurrentCorpus().scenarios[currentScenarioIndex];
+            if (currentCardIndex < scenario.cards.length - 1) {
+                currentCardIndex++;
+                displayCard();
+                updateControls();
+            }
+        }
+
+        function prevCard() {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                displayCard();
+                updateControls();
+            }
+        }
+
+        function updateControls() {
+            const scenario = getCurrentCorpus().scenarios[currentScenarioIndex];
+            document.getElementById('prev-btn').disabled = currentCardIndex === 0;
+            document.getElementById('next-btn').disabled = currentCardIndex === scenario.cards.length - 1;
+        }
+
+        // Event listeners
+        document.getElementById('flashcard').addEventListener('click', flipCard);
+        document.getElementById('flip-btn').addEventListener('click', flipCard);
+        document.getElementById('next-btn').addEventListener('click', nextCard);
+        document.getElementById('prev-btn').addEventListener('click', prevCard);
+
+        // Speaker button - prevent event bubbling to card flip
+        document.getElementById('speaker-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakGerman();
+        });
+
+        // Verb tab switching
+        document.querySelectorAll('.verb-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const verb = tab.dataset.verb;
+                if (verb !== currentVerb) {
+                    currentVerb = verb;
+                    currentScenarioIndex = 0;
+                    currentCardIndex = 0;
+
+                    // Update tab active state
+                    document.querySelectorAll('.verb-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // Reload scenarios and card
+                    createScenarioNav();
+                    displayCard();
+                    updateControls();
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flipCard();
+            } else if (e.key === 'ArrowRight') {
+                nextCard();
+            } else if (e.key === 'ArrowLeft') {
+                prevCard();
+            }
+        });
+
+        // Initialize app on page load
+        initializeApp();
+    </script>
+</body>
+</html>
