@@ -210,6 +210,15 @@
             box-shadow: none;
         }
 
+        .btn-autoplay-active {
+            background: #10b981 !important;
+            color: white !important;
+        }
+
+        .btn-autoplay-active:hover {
+            background: #059669 !important;
+        }
+
         .scenario-nav {
             display: flex;
             gap: 10px;
@@ -347,6 +356,7 @@
             <button class="btn" id="prev-btn">← Previous</button>
             <button class="btn btn-primary" id="flip-btn">Flip Card</button>
             <button class="btn" id="next-btn">Next →</button>
+            <button class="btn" id="autoplay-btn">▶ Auto-Play</button>
         </div>
 
         <div class="scenario-nav" id="scenario-nav"></div>
@@ -1059,6 +1069,9 @@
         let currentVerb = 'haben';
         let currentScenarioIndex = 0;
         let currentCardIndex = 0;
+        let isAutoPlaying = false;
+        let autoPlayTimer = null;
+        let autoPlayDelay = 6000; // 6 seconds per card
 
         function getCurrentCorpus() {
             return corpuses[currentVerb];
@@ -1168,6 +1181,63 @@
             document.getElementById('next-btn').disabled = currentCardIndex === scenario.cards.length - 1;
         }
 
+        function advanceToNextCard() {
+            const corpus = getCurrentCorpus();
+            const scenario = corpus.scenarios[currentScenarioIndex];
+
+            // Try to go to next card in current scenario
+            if (currentCardIndex < scenario.cards.length - 1) {
+                currentCardIndex++;
+            } else {
+                // Move to next scenario
+                if (currentScenarioIndex < corpus.scenarios.length - 1) {
+                    currentScenarioIndex++;
+                    currentCardIndex = 0;
+                } else {
+                    // Loop back to beginning
+                    currentScenarioIndex = 0;
+                    currentCardIndex = 0;
+                }
+                createScenarioNav();
+            }
+
+            displayCard();
+            updateControls();
+        }
+
+        function startAutoPlay() {
+            isAutoPlaying = true;
+            document.getElementById('autoplay-btn').textContent = '⏸ Stop';
+            document.getElementById('autoplay-btn').classList.add('btn-autoplay-active');
+
+            function autoPlayStep() {
+                if (isAutoPlaying) {
+                    advanceToNextCard();
+                    autoPlayTimer = setTimeout(autoPlayStep, autoPlayDelay);
+                }
+            }
+
+            autoPlayTimer = setTimeout(autoPlayStep, autoPlayDelay);
+        }
+
+        function stopAutoPlay() {
+            isAutoPlaying = false;
+            if (autoPlayTimer) {
+                clearTimeout(autoPlayTimer);
+                autoPlayTimer = null;
+            }
+            document.getElementById('autoplay-btn').textContent = '▶ Auto-Play';
+            document.getElementById('autoplay-btn').classList.remove('btn-autoplay-active');
+        }
+
+        function toggleAutoPlay() {
+            if (isAutoPlaying) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        }
+
         // Event listeners
         document.getElementById('flashcard').addEventListener('click', flipCard);
         document.getElementById('flip-btn').addEventListener('click', flipCard);
@@ -1180,11 +1250,19 @@
             speakGerman();
         });
 
+        // Auto-play button
+        document.getElementById('autoplay-btn').addEventListener('click', toggleAutoPlay);
+
         // Verb tab switching
         document.querySelectorAll('.verb-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const verb = tab.dataset.verb;
                 if (verb !== currentVerb) {
+                    // Stop auto-play when switching verbs
+                    if (isAutoPlaying) {
+                        stopAutoPlay();
+                    }
+
                     currentVerb = verb;
                     currentScenarioIndex = 0;
                     currentCardIndex = 0;
