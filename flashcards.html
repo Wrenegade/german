@@ -363,7 +363,7 @@
         <div class="scenario-nav" id="scenario-nav"></div>
 
         <div class="keyboard-hint">
-            💡 Keyboard shortcuts: Space/Click to flip | ← → to navigate cards | 🔊 Auto-plays on each card
+            💡 Keyboard shortcuts: Space/Click to flip | ← → to navigate | S to speak | 🔊 Auto-plays on each card
         </div>
     </div>
 
@@ -1439,6 +1439,9 @@
                 nextCard();
             } else if (e.key === 'ArrowLeft') {
                 prevCard();
+            } else if (e.key === 's' || e.key === 'S') {
+                e.preventDefault();
+                speakGerman();
             }
         });
 
