@@ -20,6 +20,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
@@ -1449,25 +1450,44 @@
 
         // Touch swipe gestures for mobile
         let touchStartX = 0;
+        let touchStartY = 0;
         let touchEndX = 0;
+        let touchEndY = 0;
         const minSwipeDistance = 50;
 
         const flashcardElement = document.getElementById('flashcard');
 
         flashcardElement.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         }, { passive: true });
+
+        flashcardElement.addEventListener('touchmove', (e) => {
+            // Prevent page scroll during horizontal swipe
+            const touchX = e.changedTouches[0].screenX;
+            const touchY = e.changedTouches[0].screenY;
+            const deltaX = Math.abs(touchX - touchStartX);
+            const deltaY = Math.abs(touchY - touchStartY);
+
+            // If horizontal swipe is stronger than vertical, prevent default scroll
+            if (deltaX > deltaY && deltaX > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         flashcardElement.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             handleSwipe();
         }, { passive: true });
 
         function handleSwipe() {
-            const swipeDistance = touchEndX - touchStartX;
+            const swipeDistanceX = touchEndX - touchStartX;
+            const swipeDistanceY = Math.abs(touchEndY - touchStartY);
 
-            if (Math.abs(swipeDistance) > minSwipeDistance) {
-                if (swipeDistance > 0) {
+            // Only trigger if horizontal swipe is stronger than vertical
+            if (Math.abs(swipeDistanceX) > minSwipeDistance && Math.abs(swipeDistanceX) > swipeDistanceY) {
+                if (swipeDistanceX > 0) {
                     // Swiped right - go to previous card
                     prevCard();
                 } else {
