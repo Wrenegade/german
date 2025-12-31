@@ -1447,6 +1447,36 @@
             }
         });
 
+        // Touch swipe gestures for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 50;
+
+        const flashcardElement = document.getElementById('flashcard');
+
+        flashcardElement.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        flashcardElement.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+
+            if (Math.abs(swipeDistance) > minSwipeDistance) {
+                if (swipeDistance > 0) {
+                    // Swiped right - go to previous card
+                    prevCard();
+                } else {
+                    // Swiped left - go to next card
+                    nextCard();
+                }
+            }
+        }
+
         // Initialize app on page load
         initializeApp();
     </script>
